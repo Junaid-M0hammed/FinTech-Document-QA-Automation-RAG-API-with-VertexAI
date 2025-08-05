@@ -1,0 +1,55 @@
+# Fintech RAG API Configuration
+
+# API Settings
+api:
+  title: "Fintech Document Q&A API"
+  description: "Production-grade RAG API for financial document intelligence"
+  version: "1.0.0"
+  host: "0.0.0.0"
+  port: 8000
+  api_key: "${API_KEY}"  # Set via environment variable
+
+# Google Cloud / Vertex AI Settings
+google_cloud:
+  project_id: "${GCP_PROJECT_ID}"  # Set via environment variable
+  location: "us-east1"
+  service_account_path: "${GOOGLE_APPLICATION_CREDENTIALS}"  # Path to service account JSON
+
+# Vertex AI Model Configuration
+vertex_ai:
+  model_name: "text-bison"  # PaLM 2 Text Bison model (without version suffix)
+  max_output_tokens: 1024
+  temperature: 0.2
+  top_p: 0.8
+  top_k: 40
+
+# Pinecone Vector Database Settings
+pinecone:
+  api_key: "${PINECONE_API_KEY}"  # Set via environment variable
+  environment: "${PINECONE_ENVIRONMENT}"  # e.g., "us-west1-gcp-free"
+  index_name: "fintech-documents"
+  dimension: 384  # sentence-transformers/all-MiniLM-L6-v2 embedding dimension
+
+# Document Processing Settings
+document_processing:
+  chunk_size: 500  # tokens per chunk
+  chunk_overlap: 50  # overlap between chunks
+  max_file_size_mb: 10
+  supported_formats: ["pdf", "csv", "txt"]
+
+# RAG Pipeline Settings
+rag:
+  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+  top_k_retrieval: 5  # number of chunks to retrieve
+  similarity_threshold: 0.3  # Lowered from 0.7 for better retrieval
+
+# Storage Settings
+storage:
+  upload_dir: "./uploaded_docs"
+  temp_dir: "./temp"
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "./logs/api.log" 

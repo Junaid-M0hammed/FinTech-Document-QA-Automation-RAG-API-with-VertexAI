@@ -1,0 +1,56 @@
+FIRST NATIONAL BANK
+ACCOUNT STATEMENT
+
+Account Holder: John Smith
+Account Number: ****-****-****-1234
+Statement Period: March 1, 2024 - March 31, 2024
+
+ACCOUNT SUMMARY
+Previous Balance: $2,847.50
+Total Deposits: $3,250.00
+Total Withdrawals: $1,890.75
+Current Balance: $4,206.75
+
+FEES AND CHARGES
+Monthly Maintenance Fee: $12.00
+ATM Usage Fee: $3.00 (1 transaction)
+Overdraft Fee: $0.00
+Total Fees: $15.00
+
+TRANSACTION HISTORY
+
+Date        Description                     Amount      Balance
+03/01/2024  Beginning Balance                          $2,847.50
+03/02/2024  Direct Deposit - Salary        +$2,500.00  $5,347.50
+03/03/2024  Transfer to Savings            -$500.00    $4,847.50
+03/05/2024  Grocery Store Purchase         -$127.50    $4,720.00
+03/07/2024  Gas Station                    -$45.75     $4,674.25
+03/10/2024  Online Purchase - Electronics  -$299.99    $4,374.26
+03/12/2024  Restaurant                     -$67.80     $4,306.46
+03/15/2024  Utility Bill - Electric        -$89.50     $4,216.96
+03/18/2024  Cash Withdrawal (ATM)          -$100.00    $4,116.96
+03/20/2024  Freelance Payment              +$750.00    $4,866.96
+03/22/2024  Credit Card Payment            -$450.00    $4,416.96
+03/25/2024  Rent Payment                   -$1,200.00  $3,216.96
+03/28/2024  Grocery Store Purchase         -$85.75     $3,131.21
+03/30/2024  Monthly Maintenance Fee        -$12.00     $3,119.21
+03/31/2024  Interest Earned                +$2.54      $3,121.75
+
+INTEREST INFORMATION
+Annual Percentage Yield (APY): 0.05%
+Interest Rate: 0.05%
+Daily Balance Method used for interest calculation
+
+CONTACT INFORMATION
+Customer Service: 1-800-555-BANK
+Online Banking: www.firstnationalbank.com
+Branch Hours: Mon-Fri 9AM-5PM, Sat 9AM-1PM
+
+IMPORTANT NOTICES
+- This statement covers the period from March 1, 2024, through March 31, 2024
+- Please review your statement carefully and report any errors within 60 days
+- Your account is insured by the FDIC up to $250,000
+- Overdraft protection is available - contact us for details
+- Mobile banking app available for iOS and Android
+
+END OF STATEMENT 

@@ -1,0 +1,21 @@
+transaction_id,date,merchant,category,amount,currency,status,description
+TXN001,2024-03-01,Amazon Prime,Entertainment,12.99,USD,Posted,Monthly subscription
+TXN002,2024-03-02,Starbucks,Food & Dining,5.75,USD,Posted,Coffee purchase
+TXN003,2024-03-03,Shell Gas Station,Gas,67.50,USD,Posted,Fuel purchase
+TXN004,2024-03-05,Target,Shopping,124.78,USD,Posted,Household items
+TXN005,2024-03-07,Netflix,Entertainment,15.99,USD,Posted,Monthly subscription
+TXN006,2024-03-08,Walmart,Groceries,89.32,USD,Posted,Weekly grocery shopping
+TXN007,2024-03-10,Apple Store,Technology,199.99,USD,Posted,AirPods purchase
+TXN008,2024-03-12,McDonald's,Food & Dining,11.45,USD,Posted,Fast food
+TXN009,2024-03-15,Best Buy,Technology,299.99,USD,Posted,Monitor purchase
+TXN010,2024-03-17,Uber Eats,Food & Dining,28.50,USD,Posted,Food delivery
+TXN011,2024-03-18,Home Depot,Home Improvement,156.78,USD,Posted,Garden supplies
+TXN012,2024-03-20,Spotify,Entertainment,9.99,USD,Posted,Monthly subscription
+TXN013,2024-03-22,CVS Pharmacy,Health,34.67,USD,Posted,Prescription refill
+TXN014,2024-03-24,Chipotle,Food & Dining,13.89,USD,Posted,Lunch
+TXN015,2024-03-25,Costco,Groceries,234.56,USD,Posted,Bulk shopping
+TXN016,2024-03-27,REI,Outdoor,89.99,USD,Posted,Hiking boots
+TXN017,2024-03-28,Airbnb,Travel,350.00,USD,Posted,Weekend accommodation
+TXN018,2024-03-30,United Airlines,Travel,425.00,USD,Posted,Flight tickets
+TXN019,2024-03-31,Interest Charge,Finance,22.50,USD,Posted,Monthly interest
+TXN020,2024-03-31,Late Fee,Finance,35.00,USD,Posted,Payment late fee 

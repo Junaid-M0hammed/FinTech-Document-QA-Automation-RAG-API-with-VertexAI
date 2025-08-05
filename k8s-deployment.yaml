@@ -1,0 +1,267 @@
+---
+# Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fintech-rag
+  labels:
+    app: fintech-rag-api
+---
+# ConfigMap for application configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fintech-rag-config
+  namespace: fintech-rag
+data:
+  # Non-sensitive configuration
+  app.yaml: |
+    api:
+      title: "Fintech Document Q&A API"
+      description: "Production-grade RAG API for financial document intelligence"
+      version: "1.0.0"
+      host: "0.0.0.0"
+      port: "8000"
+    
+    google_cloud:
+      location: "us-central1"
+    
+    vertex_ai:
+      model_name: "text-bison@001"
+      max_output_tokens: 1024
+      temperature: 0.2
+      top_p: 0.8
+      top_k: 40
+    
+    pinecone:
+      index_name: "fintech-documents"
+      dimension: 384
+    
+    document_processing:
+      chunk_size: 500
+      chunk_overlap: 50
+      max_file_size_mb: 10
+      supported_formats: ["pdf", "csv", "txt"]
+    
+    rag:
+      embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+      top_k_retrieval: 5
+      similarity_threshold: 0.7
+    
+    storage:
+      upload_dir: "./uploaded_docs"
+      temp_dir: "./temp"
+    
+    logging:
+      level: "INFO"
+      format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+      file: "./logs/api.log"
+---
+# Secret for sensitive configuration
+apiVersion: v1
+kind: Secret
+metadata:
+  name: fintech-rag-secrets
+  namespace: fintech-rag
+type: Opaque
+stringData:
+  # These values should be replaced with actual secrets in production
+  API_KEY: "your-api-key-here"
+  GCP_PROJECT_ID: "your-gcp-project-id"
+  PINECONE_API_KEY: "your-pinecone-api-key"
+  PINECONE_ENVIRONMENT: "your-pinecone-environment"
+  GOOGLE_APPLICATION_CREDENTIALS: "/app/config/service-account-key.json"
+---
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fintech-rag-api
+  namespace: fintech-rag
+  labels:
+    app: fintech-rag-api
+    version: v1
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: fintech-rag-api
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: fintech-rag-api
+        version: v1
+    spec:
+      containers:
+      - name: fintech-rag-api
+        image: fintech-rag-api:latest  # Replace with your actual image
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: fintech-rag-secrets
+              key: API_KEY
+        - name: GCP_PROJECT_ID
+          valueFrom:
+            secretKeyRef:
+              name: fintech-rag-secrets
+              key: GCP_PROJECT_ID
+        - name: PINECONE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: fintech-rag-secrets
+              key: PINECONE_API_KEY
+        - name: PINECONE_ENVIRONMENT
+          valueFrom:
+            secretKeyRef:
+              name: fintech-rag-secrets
+              key: PINECONE_ENVIRONMENT
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          valueFrom:
+            secretKeyRef:
+              name: fintech-rag-secrets
+              key: GOOGLE_APPLICATION_CREDENTIALS
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config/config.yaml
+          subPath: app.yaml
+        - name: gcp-service-account
+          mountPath: /app/config/service-account-key.json
+          subPath: service-account-key.json
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 3
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          runAsUser: 1000
+          capabilities:
+            drop:
+            - ALL
+      volumes:
+      - name: config-volume
+        configMap:
+          name: fintech-rag-config
+      - name: gcp-service-account
+        secret:
+          secretName: gcp-service-account-key  # Create this secret separately
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      restartPolicy: Always
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: fintech-rag-service
+  namespace: fintech-rag
+  labels:
+    app: fintech-rag-api
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8000
+    protocol: TCP
+    name: http
+  selector:
+    app: fintech-rag-api
+---
+# Horizontal Pod Autoscaler
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: fintech-rag-hpa
+  namespace: fintech-rag
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: fintech-rag-api
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+---
+# Pod Disruption Budget
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: fintech-rag-pdb
+  namespace: fintech-rag
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: fintech-rag-api
+---
+# Ingress (optional - for external access)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fintech-rag-ingress
+  namespace: fintech-rag
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"  # If using cert-manager
+spec:
+  tls:
+  - hosts:
+    - api.yourcompany.com  # Replace with your domain
+    secretName: fintech-rag-tls
+  rules:
+  - host: api.yourcompany.com  # Replace with your domain
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: fintech-rag-service
+            port:
+              number: 80 

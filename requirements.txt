@@ -1,0 +1,46 @@
+# FastAPI and web server
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# Google Cloud and Vertex AI
+google-cloud-aiplatform==1.38.1
+google-generativeai==0.8.3
+google-auth==2.25.2
+
+# Vector Database
+pinecone-client==2.2.4
+
+# RAG and LangChain
+langchain==0.0.350
+langchain-community==0.0.5
+
+# Document Processing
+PyMuPDF==1.23.8
+pandas==2.1.4
+
+# ML and Embeddings - Updated for Python 3.12 compatibility
+sentence-transformers==2.3.1
+numpy>=1.25.0
+
+# Configuration and Environment
+pyyaml==6.0.1
+python-dotenv==1.0.0
+
+# Validation and Security
+pydantic==2.5.1
+passlib[bcrypt]==1.7.4
+
+# Testing
+pytest==7.4.3
+httpx==0.25.2
+
+# Utilities
+aiofiles==23.2.1
+python-json-logger==2.0.7
+
+# Modern Frontend UI
+streamlit==1.32.0
+requests==2.32.4
+plotly==5.18.0
+pandas>=2.0.0 
