@@ -2,7 +2,7 @@
 
 A production-grade API service that enables users to upload financial documents (PDF/CSV/TXT) and ask natural language questions about them. The system uses Retrieval-Augmented Generation (RAG) architecture with Google PaLM 2 API and Pinecone vector search to provide intelligent document analysis.
 
-## 🚀 Features
+## Features
 
 - **Document Processing**: Upload and parse PDF, CSV, and TXT financial documents
 - **Natural Language Q&A**: Ask questions in plain English about uploaded documents
@@ -55,72 +55,6 @@ graph TB
 - Google Cloud Platform account with Vertex AI API enabled
 - Pinecone account and API key
 - Git
-
-## 🚀 Quick Start
-
-### 1. Clone the Repository
-
-```bash
-git clone <repository-url>
-cd fintech-rag-api
-```
-
-### 2. Environment Setup
-
-Create environment file:
-
-```bash
-# Copy and modify environment variables
-cp .env.example .env
-
-# Edit .env with your credentials
-API_KEY=your-secure-api-key
-GCP_PROJECT_ID=your-gcp-project-id
-GOOGLE_APPLICATION_CREDENTIALS=./config/service-account-key.json
-PINECONE_API_KEY=your-pinecone-api-key
-PINECONE_ENVIRONMENT=your-pinecone-environment
-```
-
-### 3. Google Cloud Setup
-
-1. Create a service account in Google Cloud Console
-2. Enable Vertex AI API
-3. Download service account JSON key
-4. Place the key file at `./config/service-account-key.json`
-
-### 4. Pinecone Setup
-
-1. Sign up at [Pinecone](https://www.pinecone.io/)
-2. Create a new index with:
-   - Dimension: 384
-   - Metric: Cosine similarity
-3. Note your API key and environment
-
-### 5. Local Development
-
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the application
-python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-
-# Access the API documentation
-open http://localhost:8000/docs
-```
-
-### 6. Docker Deployment
-
-```bash
-# Build the Docker image
-docker build -t fintech-rag-api .
-
-# Run with docker-compose
-docker-compose up -d
-
-# Check logs
-docker-compose logs -f
-```
 
 ## 📖 API Usage
 
@@ -396,30 +330,6 @@ Structured logging with configurable levels:
 - Request/response logging
 - Error tracking and debugging
 
-## 🚨 Troubleshooting
-
-### Common Issues
-
-1. **Pinecone Connection Failed**:
-   - Verify API key and environment
-   - Check network connectivity
-   - Ensure index exists with correct dimensions
-
-2. **Google Cloud Authentication Error**:
-   - Verify service account JSON file path
-   - Check Vertex AI API is enabled
-   - Ensure proper IAM permissions
-
-3. **Document Processing Failed**:
-   - Check file format is supported
-   - Verify file size under limit
-   - Ensure proper encoding
-
-4. **Out of Memory Errors**:
-   - Increase container memory limits
-   - Reduce chunk size in configuration
-   - Implement batch processing
-
 ### Debug Mode
 
 Enable debug logging:
@@ -455,13 +365,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Pinecone](https://www.pinecone.io/) for vector database services
 - [Google Cloud](https://cloud.google.com/) for Vertex AI services
 - [Sentence Transformers](https://www.sbert.net/) for embedding models
-
-## 📞 Support
-
-For support and questions:
-- Create an issue in the GitHub repository
-- Check the [troubleshooting section](#-troubleshooting)
-- Review the API documentation at `/docs` endpoint
 
 ---
 
